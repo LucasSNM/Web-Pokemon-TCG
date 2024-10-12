@@ -50,11 +50,6 @@ function App() {
       .then((response: any) => response.json()))
   }
 
-  useEffect(() => {
-    console.log(position)
-    // console.log(CardsSet.cards)
-  }, [position])
-
   const loadContent = () => {
 
     let content: any = []
@@ -73,8 +68,7 @@ function App() {
     };
 
     if (Card.name !== '') {
-      // Card.map((x: any, index: number) => {
-      content.push
+      content =
         (<div key={'cards-' + Card.id} className='flex justify-center items-center flex-col h-[100vh] w-[100vw]'
           onMouseDown={handleMouseDown}  // Start dragging
           onMouseMove={handleMouseMove}  // Track mouse movement
@@ -86,10 +80,9 @@ function App() {
           >
           </div>
         </div>)
-      // })
     }
     else if (CardsSet.cards.length > 0) {
-      CardsSet.cards.map((x: any, index: number) => {
+      CardsSet.cards.map((x: any) => {
         content.push
           (<div key={'cards-' + x.id} className='justify-evenly flex-grow h-full w-1/6'>
             <button className='shadow-sm' key={'btn-' + x.id} onClick={() => searchCard(x.id)}>
