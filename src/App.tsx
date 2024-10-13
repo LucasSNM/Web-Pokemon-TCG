@@ -82,9 +82,9 @@ function App() {
 
     const style = {
       // perspective: 'px',
-      transition: "all .2s ease-out",
+      transition: "all .1s ease-out",
       backgroundImage: `url(${Card.image + '/high.png'})`,
-      transform: `matrix3d(1, 0, 1, ${(positionStart.x - position.x) * -1 /1000000}, 0, 1, 0, ${(positionStart.y - position.y) * -1 /1000000}, -0.3400, 0, 1, 0, 1, 0, 10, 1) `,
+      transform: `matrix3d(1, 0, 1, ${(positionStart.x - position.x) * -1 / 900000}, 0, 1, 0, ${(positionStart.y - position.y) * -1 / 900000}, -0.3400, 0, 1, 0, 1, 0, 10, 1) `,
       height: `${3.5*10}rem`,
       width: `${2.55*10}rem`,
       backgroundSize: 'cover',
