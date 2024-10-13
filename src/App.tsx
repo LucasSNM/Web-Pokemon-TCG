@@ -12,7 +12,8 @@ function App() {
   }, [])
 
   const [isDragging, setIsDragging] = useState(false); // Track drag state
-  const [position, setPosition] = useState({ x: 600, y: 0 }); // Track position
+  const [position, setPosition] = useState({ x: 0, y: 0 }); // Track position
+  const [positionStart, setPositionStart] = useState({ x: 0, y: 0 }); // Track position start
 
   // Called when mouse button is pressed
   const handleMouseDown = () => {
@@ -22,24 +23,41 @@ function App() {
   // Called when mouse button is released
   const handleMouseUp = () => {
     setIsDragging(false); // Disable dragging
-    setPosition({x: 600, y: 0})
+    setPositionStart({x: 0, y: 0})
+    setPosition({x: 0, y: 0})
   };
 
   // Called when mouse moves
   const handleMouseMove = (e: any) => {
     if (isDragging) {
-      setPosition({
-        x: e.clientX,
-        y: e.clientY,
-      });
+      if(positionStart.x === 0 && positionStart.y === 0){
+        setPositionStart({
+          x: e.clientX,
+          y: e.clientY,
+        })
+      }
+      else{
+        setPosition({
+          x: e.clientX,
+          y: e.clientY,
+        });
+      }
     }
   };
   const handleTouchMove = (e: any) => {
     if (isDragging) {
-      setPosition({
-        x: e.changedTouches[0].clientX,
-        y: e.changedTouches[0].clientY,
-      });
+      if(positionStart.x === 0 && positionStart.y === 0){
+        setPositionStart({
+          x: e.changedTouches[0].clientX,
+          y: e.changedTouches[0].clientY,
+        })
+      }
+      else{
+        setPosition({
+          x: e.changedTouches[0].clientX,
+          y: e.changedTouches[0].clientY,
+        });
+      }
     }
   };
 
@@ -63,16 +81,22 @@ function App() {
     let content: any = []
 
     const style = {
-      perspective: '200px',
+      // perspective: 'px',
       transition: "all .2s ease-out",
       backgroundImage: `url(${Card.image + '/high.png'})`,
-      transform: `matrix3d(1, 0, 1, ${(position.x-600)/1000000}, 0, 1, 0, 0, -0.34, 0, 0.94, 0, 1, 0, 10, 1) translateX(-10px)`,
-      height: `${3.5*12}rem`,
-      width: `${2.55*12}rem`,
+      transform: `matrix3d(1, 0, 1, ${(positionStart.x - position.x) * -1 /1000000}, 0, 1, 0, ${(positionStart.y - position.y) * -1 /1000000}, -0.3400, 0, 1, 0, 1, 0, 10, 1) `,
+      height: `${3.5*10}rem`,
+      width: `${2.55*10}rem`,
       backgroundSize: 'cover',
       boxShadow: '0px 10px 50px rgba(0,0,0,0.8)',
       zindex: 1,
       cursor: isDragging ? 'grabbing' : 'grab',
+      margin: 0,
+      padding: 0,
+      boxsize: 'border-box',
+      maxWidth: '100%',
+      overflowx: 'hidden',
+      borderRadius: '20px',
     };
 
     if (Card.name !== '') {
@@ -86,17 +110,14 @@ function App() {
           onTouchEnd={handleMouseUp}
           onTouchStart={handleMouseDown}
         >
-          <div
-            style={style}
-          >
-          </div>
+          <div style={style}></div>
         </div>)
     }
     else if (CardsSet.cards.length > 0) {
       CardsSet.cards.map((x: any) => {
         content.push
-          (<div key={'cards-' + x.id} className='justify-evenly flex-grow h-full w-1/6'>
-            <button className='shadow-sm' key={'btn-' + x.id} onClick={() => searchCard(x.id)}>
+          (<div key={'cards-' + x.id} className='justify-evenly flex-grow h-full '>
+            <button className='shadow-sm bg-transparent' key={'btn-' + x.id} onClick={() => searchCard(x.id)}>
               {
                 x.image != null
                   ? <img
