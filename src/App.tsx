@@ -34,6 +34,14 @@ function App() {
       });
     }
   };
+  const handleTouchMove = (e: any) => {
+    if (isDragging) {
+      setPosition({
+        x: e.changedTouches[0].clientX,
+        y: e.changedTouches[0].clientY,
+      });
+    }
+  };
 
   const searchSets = async () => {
     setSets(await fetch('https://api.tcgdex.net/v2/en/sets/')
@@ -74,6 +82,9 @@ function App() {
           onMouseMove={handleMouseMove}  // Track mouse movement
           onMouseUp={handleMouseUp}      // Stop dragging
           onMouseLeave={handleMouseUp}   // Stop dragging if mouse leaves the area
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleMouseUp}
+          onTouchStart={handleMouseDown}
         >
           <div
             style={style}
