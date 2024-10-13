@@ -150,7 +150,7 @@ function App() {
   }
 
   return (
-    <div className='mx-auto px-4 text-center w-[100%] bg-slate-200'>
+    <div className='m-0 p-0 text-center w-[100%] bg-slate-200'>
       <div className=' flex flex-wrap justify-center items-center gap-3'>
         {loadContent()}
       </div>
