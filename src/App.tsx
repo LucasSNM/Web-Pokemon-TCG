@@ -80,26 +80,27 @@ function App() {
 
     let content: any = []
 
-    const style = {
-      // perspective: 'px',
-      transition: "all .1s ease-out",
-      backgroundImage: `url(${Card.image + '/high.png'})`,
-      transform: `matrix3d(1, 0, 1, ${(positionStart.x - position.x) * -1 / 900000}, 0, 1, 0, ${(positionStart.y - position.y) * -1 / 900000}, -0.3400, 0, 1, 0, 1, 0, 10, 1) `,
-      height: `${3.5*10}rem`,
-      width: `${2.55*10}rem`,
-      backgroundSize: 'cover',
-      boxShadow: '0px 10px 50px rgba(0,0,0,0.8)',
-      zindex: 1,
-      cursor: isDragging ? 'grabbing' : 'grab',
-      margin: 0,
-      padding: 0,
-      boxsize: 'border-box',
-      maxWidth: '100%',
-      overflowx: 'hidden',
-      borderRadius: '20px',
-    };
-
     if (Card.name !== '') {
+
+      const style = {
+        // perspective: 'px',
+        transition: "all .1s ease-out",
+        backgroundImage: `url(${Card.image + '/high.png'})`,
+        transform: `matrix3d(1, 0, 1, ${(positionStart.x - position.x) * -1 / 900000}, 0, 1, 0, ${(positionStart.y - position.y) * -1 / 900000}, -0.3400, 0, 1, 0, 1, 0, 10, 1) `,
+        height: `${3.5*10}rem`,
+        width: `${2.55*10}rem`,
+        backgroundSize: 'cover',
+        boxShadow: '0px 10px 50px rgba(0,0,0,0.8)',
+        zindex: 1,
+        cursor: isDragging ? 'grabbing' : 'grab',
+        margin: 0,
+        padding: 0,
+        boxsize: 'border-box',
+        maxWidth: '100%',
+        overflowx: 'hidden',
+        borderRadius: '20px',
+      };
+
       content =
         (<div key={'cards-' + Card.id} className='flex justify-center items-center flex-col h-[100vh] w-[100vw]'
           onMouseDown={handleMouseDown}  // Start dragging
@@ -115,34 +116,53 @@ function App() {
     }
     else if (CardsSet.cards.length > 0) {
       CardsSet.cards.map((x: any) => {
+
+        const style = {
+          backgroundImage: `url(${x.image + '/low.png'})`,
+          height: `${3.5*5}rem`,
+          width: `${2.55*5}rem`,
+        }
+
         content.push
-          (<div key={'cards-' + x.id} className='justify-evenly flex-grow h-full '>
-            <button className='shadow-sm bg-transparent' key={'btn-' + x.id} onClick={() => searchCard(x.id)}>
-              {
-                x.image != null
-                  ? <img
-                    src={x.image + '/low.png'}
-                    alt={x.logo}
-                    className='backdrop-brightness-50 backdrop-contrast-0 transition-all'
-                  />
-                  : <p className='text-wrap'>{x.name}</p>
-              }
-            </button>
-          </div>)
+          (<button key={'cards-' + x.id} 
+            style={style}
+            onClick={() => searchCard(x.id)}
+            className={`shadow-sm bg-no-repeat  bg-cover 
+                      opacity-90 hover:opacity-100 backdrop-brightness-50 backdrop-contrast-0 transition-all duration-300`}
+          />)
+
+        // content.push
+        //   (<div key={'cards-' + x.id} className='justify-evenly flex-grow h-full '>
+        //     <button className='shadow-sm bg-transparent' key={'btn-' + x.id} onClick={() => searchCard(x.id)}>
+        //       {
+        //         x.image != null
+        //           ? <img
+        //             src={x.image + '/low.png'}
+        //             alt={x.logo}
+        //             className='backdrop-brightness-50 backdrop-contrast-0 transition-all'
+        //           />
+        //           : <p className='text-wrap'>{x.name}</p>
+        //       }
+        //     </button>
+        //   </div>)
       })
     }
     else {
-      Sets.map((x: any, index: number) => {
+      Sets
+        .filter((x: any) => x.logo != null)
+        .map((x: any, index: number) => {
+
+          const style = {
+            backgroundImage: `url(${x.logo + '.png'})`,
+          }
+
         content.push
-          (<div key={'set-' + index} className='justify-evenly flex-grow h-full w-1/6'>
-            <button className='shadow-sm' key={'btn-' + x.id} onClick={() => searchCardsSet(x.id)}>
-              {
-                x.logo != null
-                  ? <img src={x.logo + '.png'} alt={x.logo} />
-                  : <p className='text-wrap'>{x.name}</p>
-              }
-            </button>
-          </div>)
+          (<button key={'set-' + index} 
+            style={style}
+            onClick={() => searchCardsSet(x.id)}
+            className='h-32 w-80 bg-slate-400 shadow-sm bg-no-repeat bg-center bg-contain p-7 
+                      opacity-80 hover:opacity-100 ' 
+          />)
       })
     }
 
