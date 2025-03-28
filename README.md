@@ -17,9 +17,6 @@ The project was built using:
 
 🎨 Responsive and user-friendly interface.
 
-# 🚀 Getting Started
-To run the project locally, follow these steps:
-
 # 📸 Preview
 ![image](https://github.com/user-attachments/assets/0999b8d5-30f7-4a0e-a353-bc1ac9d25ecf)
 ![image](https://github.com/user-attachments/assets/a5430d5c-71f8-4eee-8171-d2cec87bd9ba)
